@@ -1,0 +1,20 @@
+<p class="auth-window">
+  auth works here!
+</p>
+
+<div *ngIf="! isAuthenticated">
+	<span>Username: <input type="text" [required]="true" [(ngModel)]="username"></span>
+	<span>Password: <input type="text" [required]="true" [(ngModel)]="password"></span>
+
+	<button class="btn btn-success" (click)="onLogin()">Login</button>
+</div>
+
+<div *ngIf="isAuthenticated">
+	<span>Username: {{ username }}</span>
+
+	<button class="btn btn-success" (click)="onLogout()">Logout</button>
+
+	<button class="btn btn-success" (click)="onWelcome()">Welcome</button>
+
+</div>
+
