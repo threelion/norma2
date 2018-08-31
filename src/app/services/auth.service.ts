@@ -29,9 +29,26 @@ const apiError = new Observable((observer) => {
 @Injectable()
 export class AuthService {
   private undefinedUser = {
-		username: undefined,
-		role: undefined,
-		id_token: undefined
+		username: "",
+		role: "",
+		id_token: ""
+	}
+
+ //  private undefinedUser = {
+	// 	username: undefined,
+	// 	role: undefined,
+	// 	id_token: undefined
+	// }
+
+	public setUser(newUser: User) {
+		// this.activeUser = newUser;
+
+		console.log('New user set in AuthService');
+		console.log(newUser);
+	}
+
+	public unsetUser() {
+		this.activeUser = this.undefinedUser;
 	}
 
 	private activeUser = this.undefinedUser;
@@ -41,7 +58,6 @@ export class AuthService {
 	}
 
 	public logout(): void {
-		this.activeUser = this.undefinedUser;
 	}
 
 	public login(credentials: LoginData): Observable<User> {

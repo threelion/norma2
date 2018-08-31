@@ -1,20 +1,25 @@
-<p class="auth-window">
-  auth works here!
-</p>
+<div *ngIf="! isAuthenticated" class="form-group">
+  <form class="form-inline" name="loginForm">
+		<div class="input-group">
+			<span class="input-group-addon">User:</span> 
+			<input type="text" class="form-control username-input" [required]="true" [(ngModel)]="username" name="username" >
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Password: </span>
+			<input type="text" class="form-control password-input" [required]="true" [(ngModel)]="password" name="password">
+		</div>
+			<button class="btn btn-success" (click)="onLogin()">Login</button>
+			<button class="btn btn-success" (click)="onSignUp()">Sign Up</button>
 
-<div *ngIf="! isAuthenticated">
-	<span>Username: <input type="text" [required]="true" [(ngModel)]="username"></span>
-	<span>Password: <input type="text" [required]="true" [(ngModel)]="password"></span>
-
-	<button class="btn btn-success" (click)="onLogin()">Login</button>
+  </form>
 </div>
 
-<div *ngIf="isAuthenticated">
-	<span>Username: {{ username }}</span>
+<div *ngIf="isAuthenticated" class="form-group">
+  <form class="form-inline" name="logoutForm">
+		<span>User: {{ username }}</span>
 
-	<button class="btn btn-success" (click)="onLogout()">Logout</button>
+		<button class="btn btn-success" (click)="onLogout()">Logout</button>
 
-	<button class="btn btn-success" (click)="onWelcome()">Welcome</button>
-
+		<button class="btn btn-success" (click)="onWelcome()">Welcome</button>
+  </form>
 </div>
-

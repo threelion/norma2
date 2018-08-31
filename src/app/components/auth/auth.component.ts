@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
@@ -7,9 +7,12 @@ import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.sass']
 })
 export class AuthComponent implements OnInit {
+
+  @Output() public UserChanging = new EventEmitter();
+
 	username: string;
 	password: string;
   isAuthenticated: boolean;
@@ -31,7 +34,6 @@ export class AuthComponent implements OnInit {
 
   onLogin(){
     console.log('login function');
-
   	this.authService.login(this.getUserData())
   		.subscribe( res => this.dealWithResult(res))
   }
@@ -44,7 +46,10 @@ export class AuthComponent implements OnInit {
   }
 
   onLogout(){
-    console.log('logout function');
+
+    this.authService.unsetUser();
+    this.UserChanging.emit(this.authService.currentUser());
+
     localStorage.removeItem('token');
     this.isAuthenticated = false;
     this.password = "";
@@ -66,6 +71,16 @@ export class AuthComponent implements OnInit {
   }
 
   private updateUserInterface(res) {
+
+    var newUser = {
+      role: res.role,
+      id_token: res.id_token,
+      username: res.name
+    };
+
+    this.authService.setUser(newUser);
+
+    this.UserChanging.emit(newUser);
     this.isAuthenticated = true; 
     localStorage.setItem('token', res.id_token);
     this.sessionService.token = res.id_token;
