@@ -1,5 +1,5 @@
-
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit {
 	password: string;
   isAuthenticated: boolean;
 
-  constructor(private authService: AuthService, private sessionService: SessionService) { }
+  constructor(private authService: AuthService, private sessionService: SessionService, private router: Router) { }
 
   ngOnInit() {
     this.username = "Voljka";
@@ -33,14 +33,11 @@ export class AuthComponent implements OnInit {
   }
 
   onLogin(){
-    console.log('login function');
   	this.authService.login(this.getUserData())
   		.subscribe( res => this.dealWithResult(res))
   }
 
   onWelcome(){
-    console.log('welcome function');
-
     this.authService.welcome()
       .subscribe( res => console.log(res))
   }
@@ -49,6 +46,7 @@ export class AuthComponent implements OnInit {
 
     this.authService.unsetUser();
     this.UserChanging.emit(this.authService.currentUser());
+    this.router.navigate(['/']);
 
     localStorage.removeItem('token');
     this.isAuthenticated = false;
@@ -58,10 +56,8 @@ export class AuthComponent implements OnInit {
 
   private dealWithResult(res) {
     if (res.status > 300) {
-      console.log(res);
       this.showAuthError(res);
     } else {
-      console.log(res);
       this.updateUserInterface(res);
     }
   }
@@ -75,7 +71,8 @@ export class AuthComponent implements OnInit {
     var newUser = {
       role: res.role,
       id_token: res.id_token,
-      username: res.name
+      username: res.name,
+      id: res._id
     };
 
     this.authService.setUser(newUser);

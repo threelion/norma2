@@ -4,4 +4,5 @@ export interface User {
 	username: string;
 	id_token: string;
 	role: string | UserRole;
+	id: String;
 }

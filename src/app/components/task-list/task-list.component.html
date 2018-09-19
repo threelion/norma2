@@ -1,0 +1,30 @@
+  <!-- <button (click)="onGetList()">Get tasks</button> -->
+
+
+
+  <table class="table">
+  	<thead>
+  		<tr>
+  			<td>Name</td>
+  			<td>Due</td>
+  			<td>Executor</td>
+  			<td>Controller</td>
+  			<td>Issued At</td>
+  			<td>Status</td>
+  			<td>Files</td>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr *ngFor="let task of taskList" (click)="onSelect(task)" [ngClass]="taskRowStyle(task)">
+  			<td>{{ task.name }}</td>
+  			<td>{{ task.deadline }}</td>
+  			<td>{{ task.executor.username }}</td>
+  			<td>{{ task.controller.username }}</td>
+  			<td>{{ task.issuedAt }}</td>
+  			<td>{{ task.status.name }}</td>
+  			<td>{{ task.attachments.length }}</td>
+
+  		</tr>
+  	</tbody>
+  </table>
+

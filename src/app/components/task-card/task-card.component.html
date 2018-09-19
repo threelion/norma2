@@ -1,0 +1,67 @@
+<div *ngIf="task">
+	
+	<div class="input-group">
+		<span class="input-group-addon">Task:</span> 
+		<input type="text" class="form-control " [required]="true" [ngModel]="task.name" (ngModelChange)="task.name = $event" [readonly]="onlyread">
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Note:</span> 
+		<input type="text" class="form-control " [required]="true" [ngModel]="task.description" (ngModelChange)="task.description = $event" [readonly]="onlyread">
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Due datetime: </span>
+		<input  class="form-control" type="date" [ngModel]="duedate" (ngModelChange)="duedate = $event" [readonly]="onlyread">
+
+		<input  class="form-control " type="time" [ngModel]="duetime" (ngModelChange)="duetime = $event" [readonly]="onlyread">
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Status:</span> 
+		<input  class="form-control " type="text" [ngModel]="task.status.name" readonly>
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Task Type:</span> 
+		<select  class="form-control" type="text" [ngModel]="task.taskType._id" (ngModelChange)="task.taskType._id = $event" [disabled]="onlyread && ! isNew">
+			<option *ngFor="let tasktype of taskTypes" [ngValue]="tasktype._id">{{tasktype.name}}</option>
+		</select>
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Issuer:</span> 
+		<select  class="form-control" type="text" [ngModel]="task.issuer._id" (ngModelChange)="task.issuer._id = $event" disabled>
+			<option *ngFor="let issuer of executors" [ngValue]="issuer._id">{{issuer.username}}</option>
+		</select>
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Executor:</span> 
+		<select  class="form-control" type="text" [ngModel]="task.executor._id" (ngModelChange)="task.executor._id = $event" [disabled]="onlyread && ! isNew">
+			<option *ngFor="let executor of executors" [ngValue]="executor._id">{{executor.username}}</option>
+		</select>
+	</div>
+
+	<div class="input-group">
+		<span class="input-group-addon">Controller:</span> 
+		<select  class="form-control" type="text" [ngModel]="task.controller._id" (ngModelChange)="task.controller._id = $event" [disabled]="onlyread && ! isNew">
+			<option *ngFor="let controller of controllers" [ngValue]="controller._id">{{controller.username}}</option>
+		</select>
+	</div>
+
+	<div class="btn-group">
+		<button class="btn btn-default" *ngFor="let file of task.attachments" (click)="downloadFile(file)">
+			<img [src]="getFileImg(file)"> 
+			{{file.initialFilename}}
+		</button>
+	</div>
+
+	<br><br>
+
+	<div class="btn-group">
+		<button class="btn btn-success" (click)="onSave()" *ngIf="! onlyread">Save</button>
+		<button class="btn btn-warning" (click)="onClose()">{{closeCaption}}</button>
+	</div>
+
+</div>

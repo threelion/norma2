@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
@@ -12,14 +12,6 @@ export class ConfigService {
 	public static authUrl = "http://localhost:8080/api/v1/";
 
 	private createHeader(header: Headers) {
-// //		header.append('Access-Control-Allow-Origin','*');
-//   header.append('Content-Type', 'application/json');
-//   header.append('Accept', 'application/json');
-
-//   header.append('Access-Control-Allow-Origin', 'http://localhost:4200');
-//   header.append('Access-Control-Allow-Credentials', 'true');
-
-//   // header.append('GET', 'POST', 'OPTIONS');
 		header.append('Authorization', 'Bearer ' + this.sessionService.token);
 	}
 
@@ -28,6 +20,13 @@ export class ConfigService {
 		this.createHeader(headers);
 		return this.http.get(ConfigService.apiUrl + url, {headers: headers})
 	}
+
+	getFile(url) {
+		let headers = new Headers();
+		this.createHeader(headers);
+		return this.http.get(ConfigService.apiUrl + url, {headers: headers, responseType: ResponseContentType.Blob})
+	}
+	
 
 	post(url, data) {
 		let headers = new Headers();

@@ -1,0 +1,17 @@
+<div class="filters-block">
+	
+	<tasks-by-role-selector 
+		(onRoleFilterChange)="roleFilterChange($event)"
+		[role]="role"
+	>
+	</tasks-by-role-selector>
+	<task-by-status-selector
+		(onChangeStatusState)="statusSelectorChange($event)"
+		[role]="role"
+		>
+	</task-by-status-selector>
+
+</div>
+<br><br>
+<task-actions-block  [selectedTask]="currentTask"></task-actions-block>
+<task-list [taskList]="tasksForShow" (selectTask)="selectTaskAction($event)" [selectedTask]="currentTask"></task-list>

@@ -1,0 +1,89 @@
+Arguments: 
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add @fontawesome/angular-fontawesome
+
+PATH: 
+  /home/voljka/Downloads/google-cloud-sdk/bin:/home/voljka/bin:/home/voljka/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  9.4.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@fontawesome%2fangular-fontawesome: Not found
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:64202:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:137468:22)
+      at Request.emit (events.js:160:13)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:138440:10)
+      at Request.emit (events.js:160:13)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:138362:12)
+      at Object.onceWrapper (events.js:255:19)
+      at IncomingMessage.emit (events.js:165:20)
+      at endReadableNT (_stream_readable.js:1101:12)
+      at process._tickCallback (internal/process/next_tick.js:152:19)
+
+npm manifest: 
+  {
+    "name": "ang2auth",
+    "version": "0.0.0",
+    "license": "MIT",
+    "scripts": {
+      "ng": "ng",
+      "start": "ng serve",
+      "build": "ng build --prod",
+      "test": "ng test",
+      "lint": "ng lint",
+      "e2e": "ng e2e"
+    },
+    "private": true,
+    "dependencies": {
+      "@angular/animations": "^5.2.0",
+      "@angular/common": "^5.2.0",
+      "@angular/compiler": "^5.2.0",
+      "@angular/core": "^5.2.0",
+      "@angular/forms": "^5.2.0",
+      "@angular/http": "^5.2.0",
+      "@angular/platform-browser": "^5.2.0",
+      "@angular/platform-browser-dynamic": "^5.2.0",
+      "@angular/router": "^5.2.0",
+      "bootstrap": "^3.3.7",
+      "core-js": "^2.4.1",
+      "jquery": "^3.3.1",
+      "less": "^3.0.4",
+      "npm": "^6.4.1",
+      "rxjs": "^5.5.6",
+      "zone.js": "^0.8.19"
+    },
+    "devDependencies": {
+      "@angular/cli": "1.6.5",
+      "@angular/compiler-cli": "^5.2.0",
+      "@angular/language-service": "^5.2.0",
+      "@types/jasmine": "~2.8.3",
+      "@types/jasminewd2": "~2.0.2",
+      "@types/node": "~6.0.60",
+      "codelyzer": "^4.0.1",
+      "jasmine-core": "~2.8.0",
+      "jasmine-spec-reporter": "~4.2.1",
+      "karma": "~2.0.0",
+      "karma-chrome-launcher": "~2.2.0",
+      "karma-cli": "~1.0.1",
+      "karma-coverage-istanbul-reporter": "^1.2.1",
+      "karma-jasmine": "~1.1.0",
+      "karma-jasmine-html-reporter": "^0.2.2",
+      "node-sass": "^4.9.0",
+      "protractor": "~5.1.2",
+      "ts-node": "~4.1.0",
+      "tslint": "~5.9.1",
+      "typescript": "~2.5.3"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,0 +1,5 @@
+<button class="btn btn-default active col-md-2" (click)="onExecutor()">
+	{{ (isShowExecutorTasks ? hideE : showE) }}
+</button>
+<button class="btn btn-default active col-md-2" (click)="onController()" *ngIf="role== 'Director'">{{ (isShowControllerTasks ? hideC : showC) }}</button>
+<div class="col-md-5"></div>

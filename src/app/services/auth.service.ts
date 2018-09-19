@@ -31,27 +31,22 @@ export class AuthService {
   private undefinedUser = {
 		username: "",
 		role: "",
-		id_token: ""
+		id_token: "",
+		id: ""
 	}
 
- //  private undefinedUser = {
-	// 	username: undefined,
-	// 	role: undefined,
-	// 	id_token: undefined
-	// }
+	public activeUser : User = this.undefinedUser;
 
 	public setUser(newUser: User) {
-		// this.activeUser = newUser;
+		this.activeUser = newUser;
 
 		console.log('New user set in AuthService');
-		console.log(newUser);
+		console.log(this.activeUser);
 	}
 
 	public unsetUser() {
 		this.activeUser = this.undefinedUser;
 	}
-
-	private activeUser = this.undefinedUser;
 
 	public currentUser(): User {
 		return this.activeUser;
@@ -75,11 +70,8 @@ export class AuthService {
 
 		if (error.status == 401) {
 			return authError.toPromise();
-			// return Observable.throw(error);
 		} else {
 			return apiError.toPromise();
-			// console.log('Status: Server Error')
-			// return Observable.throw(error);
 		}
 	}
  
@@ -90,7 +82,5 @@ export class AuthService {
 			.catch(AuthService.handleError)
 	}
 
-  // constructor(private configService: ConfigService, private sessionService: SessionService) { }
   constructor(private configService: ConfigService) { }
-
 }

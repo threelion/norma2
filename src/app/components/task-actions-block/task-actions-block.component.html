@@ -1,0 +1,29 @@
+<button class="btn btn-default col-md-2" 
+				(click)="onNewButton()">
+	New
+</button>
+<button class="btn btn-default col-md-2"  
+			*ngIf="showViewBtn()" 
+			(click)="onViewButton()">
+	View
+</button>
+<button class="btn btn-default col-md-2"  
+			*ngIf="showModifyBtn()"
+			(click)="onChangeButton()">
+	Change
+</button>
+<button class="btn btn-default col-md-2" 
+			*ngIf="showAcceptBtn()"
+			(click)="onAcceptButton()">
+	Accept & Next step
+</button>
+<button class="btn btn-default col-md-2" 
+			*ngIf="showDeclineBtn()"
+			(click)="onDeclineButton()">
+	Decline
+</button>
+<button class="btn btn-default col-md-2" 
+			*ngIf="showAbortBtn()"
+			(click)="onAbortButton()">
+	Abort
+</button>

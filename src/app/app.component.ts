@@ -12,7 +12,8 @@ export class AppComponent {
   user = {
   	role: "",
   	username: "",
-  	id_token: ""
+  	id_token: "",
+    id: ""
   };
 
 
