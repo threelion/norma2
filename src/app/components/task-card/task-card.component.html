@@ -1,5 +1,5 @@
 <div *ngIf="task">
-	
+
 	<div class="input-group">
 		<span class="input-group-addon">Task:</span> 
 		<input type="text" class="form-control " [required]="true" [ngModel]="task.name" (ngModelChange)="task.name = $event" [readonly]="onlyread">
@@ -36,7 +36,14 @@
 		</select>
 	</div>
 
-	<div class="input-group">
+	<div class="input-group" *ngIf="isNew">
+		<span class="input-group-addon">Executor:</span> 
+		<select  class="form-control" type="text" [ngModel]="task.executor._id" (ngModelChange)="task.executor._id = $event" [disabled]="onlyread && ! isNew" multiple>
+			<option *ngFor="let executor of executors" [ngValue]="executor._id">{{executor.username}}</option>
+		</select>
+	</div>
+
+	<div class="input-group" *ngIf="! isNew">
 		<span class="input-group-addon">Executor:</span> 
 		<select  class="form-control" type="text" [ngModel]="task.executor._id" (ngModelChange)="task.executor._id = $event" [disabled]="onlyread && ! isNew">
 			<option *ngFor="let executor of executors" [ngValue]="executor._id">{{executor.username}}</option>
@@ -51,10 +58,19 @@
 	</div>
 
 	<div class="btn-group">
-		<button class="btn btn-default" *ngFor="let file of task.attachments" (click)="downloadFile(file)">
-			<img [src]="getFileImg(file)"> 
-			{{file.initialFilename}}
-		</button>
+		<div  *ngFor="let file of task.attachments" class="file-button-group">
+			<button class="btn btn-small" (click)="onDeleteFile(file)">
+				<img src="assets/img/minus24.png" alt="" class="">
+			</button>
+			<button class="btn btn-default added-file" (click)="downloadFile(file)">
+				<img [src]="getFileImg(file)"> 
+				{{file.initialFilename}}
+			</button>
+		</div>
+		<label for="file_upload" class="custom-file-upload">
+			<img src="assets/img/plus64.png">
+		</label> 
+		<input type="file" class="file-selector" id="file_upload" (change)="onSelectNewAttachment($event)" />
 	</div>
 
 	<br><br>
@@ -65,3 +81,6 @@
 	</div>
 
 </div>
+
+<task-executable-block></task-executable-block>
+

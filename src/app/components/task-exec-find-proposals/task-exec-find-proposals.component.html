@@ -1,0 +1,75 @@
+<table class="table">
+	<thead>
+		<tr>
+			<td>Product</td>
+			<td>Producer</td>
+			<td>Quantity</td>
+			<td>Price</td>
+			<td>Delivery Days</td>
+			<td>Suplier</td>
+			<td>Actions</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="7">
+					<button class="btn btn-small" (click)="addPosition()" *ngIf="showAddPosBtn()">
+						<img src="assets/img/plus48.png" width="24px" alt="Add position"/>
+					</button>
+			</td>
+		</tr>
+		<ng-container *ngFor="let position of positions">
+			<tr class="requested-product">
+				<td *ngIf="! position.isEditing">{{position.product.name}}</td>
+				<td *ngIf="position.isEditing">
+					<select-with-filter [elements]="products" [selected]="position.product._id" [valueField]="'_id'" [nameField]="'name'" (changed)="changedPosProduct($event)" (add)="addProduct($event)">
+					</select-with-filter>
+				</td>
+				<td>{{position.product.producer.name}}</td>
+				<td>{{position.quantity}}</td>
+				<td>{{position.initialPrice}}</td>
+				<td>{{position.deliveryDays}}</td>
+				<td></td>
+				<td>
+					<button class="btn btn-small" (click)="removePosition(position)" *ngIf="showDelPosBtn()">
+						<img src="assets/img/minus48.png" width="24px" alt="Remove position"/>
+					</button>
+					<button class="btn btn-small" (click)="editPosition(position)" *ngIf="showEditPosBtn()">
+						<img src="assets/img/change48.png" width="24px" alt="Update position"/>
+					</button>
+					<button class="btn btn-small" (click)="savePosition(position)" *ngIf="showSavePosBtn()">
+						<img src="assets/img/save48.png" width="24px" alt="Save position"/>
+					</button>
+					<button class="btn btn-small" (click)="abortPosition(position)" *ngIf="showAbortPosBtn()">
+						<img src="assets/img/abort48.png" width="24px" alt="Abort changes"/>
+					</button>
+					<button class="btn btn-small" (click)="addProposal()" *ngIf="showAddProposalBtn()">
+						<img src="assets/img/plus48.png" width="24px" alt="Add proposal"/>
+					</button>
+				</td>
+			</tr>
+			<tr *ngFor="let proposal of position.proposals">
+				<td>{{ proposal.product.name }}</td>
+				<td>{{ proposal.product.producer.name }}</td>
+				<td>{{ proposal.quantity }}</td>
+				<td>{{ proposal.price }}</td>
+				<td>{{ proposal.deliveryDays }}</td>
+				<td [attr.title]="supplierInfo(proposal.supplier)">{{ proposal.supplier.name }}</td>
+				<td>
+					<button class="btn btn-small" (click)="removeProposal(proposal)" *ngIf="showDelProposalBtn()">
+						<img src="assets/img/minus48.png" width="24px" alt="Remove proposal"/>
+					</button>
+					<button class="btn btn-small" (click)="editProposal(proposal)" *ngIf="showEditProposalBtn()">
+						<img src="assets/img/change48.png" width="24px" alt="Update proposal"/>
+					</button>
+					<button class="btn btn-small" (click)="saveProposal(proposal)" *ngIf="showSaveProposalBtn()">
+						<img src="assets/img/save48.png" width="24px" alt="Save proposal"/>
+					</button>
+					<button class="btn btn-small" (click)="abortProposal(proposal)" *ngIf="showAbortProposalBtn()">
+						<img src="assets/img/abort48.png" width="24px" alt="Abort changes"/>
+					</button>
+				</td>
+			</tr>
+		</ng-container>
+	</tbody>
+</table>

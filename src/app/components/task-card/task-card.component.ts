@@ -10,6 +10,8 @@ import { FileService } from '../../services/file.service';
 import { AuthService } from '../../services/auth.service';
 import { MultidataService } from '../../services/multidata.service';
 
+const MAX_ATTACHMENT_SIZE = 2000000;
+
 import { UTCFromlocalDateTime, localDateFromUTC, localTimeFromUTC } from '../../libs/date';
 
 @Component({
@@ -115,11 +117,78 @@ export class TaskCardComponent implements OnInit {
   }
 
   onSave(){
-    console.log(this.task);
-    console.log(UTCFromlocalDateTime(this.duedate, this.duetime));
+    // console.log(this.task);
+    var due = UTCFromlocalDateTime(this.duedate, this.duetime);
+    // console.log(due);
+
+    var task : Task = {
+      name: this.task.name,
+      description : this.task.description,
+      executor: (this.task.executor._id instanceof Array) ? this.task.executor._id : [this.task.executor._id],
+      controller: this.task.controller._id,
+      deadline: new Date(due),
+      attachments: this.task.attachments,
+      issuer: this.task.issuer._id,
+      taskType: this.task.taskType._id,
+    }
+
+    if (this.isNew){
+      this.taskService.addTask(task).subscribe(
+        newTask => {
+          console.log('task added')
+          // console.log(newTask)
+        })
+
+    } else {
+      task._id = this.task._id;
+      this.taskService.updateTask(task).subscribe(
+        updatedTask => {
+          // console.log('task updated')
+          console.log(updatedTask)
+        })
+    };
+  }
+
+  onSelectNewAttachment(e){
+
+    if (e.target.files){
+      if (e.target.files[0].size > MAX_ATTACHMENT_SIZE) {
+        alert('File size must me less 2Mb!');
+      } else {
+        var form = new FormData();
+        form.append('file', e.target.files[0]);
+
+        if (! this.task.attachments){
+          this.task.attachments = [];
+        }
+        
+        this.fileService.uploadFile(form).subscribe(
+          res => this.task.attachments.push(res)
+        )
+      };
+    }
   }
 
   private showCard(){
+
+  }
+
+  onDeleteFile(file){
+    this.fileService.deleteFile(file).subscribe(
+      deletedFile => {
+        // console.log(deletedFile);
+
+        this.task.attachments = _.filter(this.task.attachments, function(o){
+
+          return o._id != deletedFile._id
+        })
+
+        // console.log(this.task.attachments);
+      }
+    )
+  }
+
+  onAddFile(){
 
   }
 

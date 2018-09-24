@@ -44,7 +44,17 @@ export class TaskMonitorComponent implements OnInit {
   	this.taskService.getCEOTasks({_id: this.userId})
       .subscribe( res => {
         this.tasks = res;
+        // console.log(this.tasks);
         this.tasksForShow = this.filterTasks(res, this.userId);
+      });
+  }
+
+  refreshList() {
+    this.taskService.getCEOTasks({_id: this.userId})
+      .subscribe( res => {
+        this.tasks = res;
+        this.tasksForShow = this.filterTasks(res, this.userId);
+        this.currentTask = undefined;
       });
   }
 
@@ -64,7 +74,6 @@ export class TaskMonitorComponent implements OnInit {
     var res: Object[];
     if (! this.isShowClosed){
       res = _.filter(tasks, function(o){
-        // return closedJobs.indexOf(o.status._id) < 0
         return (! ts.isClosedTask(o.status._id));
       });
     } else {

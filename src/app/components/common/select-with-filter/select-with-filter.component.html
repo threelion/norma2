@@ -1,0 +1,5 @@
+<input type="text" [ngModel]="_filter" (input)="filterElements($event)" placeholder="Filter" />
+<br>
+<select class="select-filtered">
+	<option *ngFor="let val of filteredElements" [ngValue]="selected">{{ val[nameField] }}</option>
+</select>

@@ -13,5 +13,5 @@
 
 </div>
 <br><br>
-<task-actions-block  [selectedTask]="currentTask"></task-actions-block>
+<task-actions-block  [selectedTask]="currentTask" (refresh)="refreshList($event)"></task-actions-block>
 <task-list [taskList]="tasksForShow" (selectTask)="selectTaskAction($event)" [selectedTask]="currentTask"></task-list>

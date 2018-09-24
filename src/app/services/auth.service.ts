@@ -10,21 +10,7 @@ import { LoginData } from '../interfaces/login-data';
 import { ConfigService } from './config.service';
 import { SessionService } from './session.service';
 
-const authError = new Observable((observer) => {
-	observer.next({
-		msg: "Authentication failed",
-		status: 401
-	});
-	observer.complete();
-})
-
-const apiError = new Observable((observer) => {
-	observer.next({
-		msg: "Server error",
-		status: 500
-	});
-	observer.complete();
-})
+import { authError, apiError } from '../libs/httpErrorHandler';
 
 @Injectable()
 export class AuthService {

@@ -3,21 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ConfigService } from './config.service';
 
-const authError = new Observable((observer) => {
-	observer.next({
-		msg: "Authentication failed",
-		status: 401
-	});
-	observer.complete();
-})
-
-const apiError = new Observable((observer) => {
-	observer.next({
-		msg: "Server error",
-		status: 500
-	});
-	observer.complete();
-})
+import { handleError } from '../libs/httpErrorHandler';
 
 @Injectable()
 export class MultidataService {
@@ -27,18 +13,12 @@ export class MultidataService {
   public getDataForTaskCard(){
 		return this.configService.get('multidata/taskcard/')
 			.map(response => response.json())
-			.catch(MultidataService.handleError)
+			.catch(handleError)
   }
 
-	static handleError(error: any){
-		console.log(error);
-
-		if (error.status == 401) {
-			return authError.toPromise();
-		} else {
-			return apiError.toPromise();
-		}
+	public getDataForEnteringProposals(task){
+		return this.configService.get('multidata/proposalentering/deal/'+ task.potentialDeal._id + '/executor/' + task.executor._id)
+			.map(response => response.json())
+			.catch(handleError)
 	}
-
-
 }

@@ -4,8 +4,6 @@ import { Task } from '../../interfaces/task';
 import { TaskService } from '../../services/task.service';
 
 import * as _ from 'lodash';
-// const closedJobs = ['e55303d0-b279-11e8-9dbd-f7e01824872b', 'b682c310-b279-11e8-9dbd-f7e01824872b'];
-
 
 @Component({
   selector: 'task-list',
@@ -21,6 +19,7 @@ export class TaskListComponent implements OnInit {
   constructor( private taskService: TaskService) { }
 
   ngOnInit() {
+    
   }
 
   taskRowStyle(task){
@@ -28,7 +27,6 @@ export class TaskListComponent implements OnInit {
 
     if (task.selected) return 'selected-task'
     else 
-      // if (closedJobs.indexOf(task.status._id) > -1) return 'completed-task'
       if (this.taskService.isClosedTask(task.status._id)) return 'completed-task'
       else 
         if (curDate > ( new Date(task.deadline))) return 'overdued-task' 

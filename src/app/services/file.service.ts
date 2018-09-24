@@ -4,22 +4,7 @@ import { Observable } from 'rxjs/Observable';
 // import { Task } from '../interfaces/task';
 import { ConfigService } from './config.service';
 
-
-const authError = new Observable((observer) => {
-	observer.next({
-		msg: "Authentication failed",
-		status: 401
-	});
-	observer.complete();
-})
-
-const apiError = new Observable((observer) => {
-	observer.next({
-		msg: "Server error",
-		status: 500
-	});
-	observer.complete();
-})
+import { authError, apiError } from '../libs/httpErrorHandler';
 
 @Injectable()
 export class FileService {
@@ -34,6 +19,12 @@ export class FileService {
 
 	public uploadFile(credentials): Observable<any> {
 		return this.configService.post('files/upload/', credentials)
+			.map(response => response.json())
+			.catch(FileService.handleError)
+	}
+
+	public deleteFile(file): Observable<any> {
+		return this.configService.delete('files/' + file._id)
 			.map(response => response.json())
 			.catch(FileService.handleError)
 	}
