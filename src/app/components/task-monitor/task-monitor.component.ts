@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { Task } from '../../interfaces/task';
 import { UserRole } from '../../enums/user-role.enum';
 
+import { ProductService } from '../../services/product.service';
+
 import * as _ from 'lodash';
 // const closedJobs = ['e55303d0-b279-11e8-9dbd-f7e01824872b', 'b682c310-b279-11e8-9dbd-f7e01824872b'];
 
@@ -24,7 +26,17 @@ export class TaskMonitorComponent implements OnInit {
   constructor( 
     private taskService: TaskService, 
     private authService: AuthService, 
-  ) { }
+    private productService: ProductService, 
+  ) { 
+    let np = this.productService.create('Magnit', 'Specmagnit','5879 55 777 44');
+    console.log(np);
+    // np.all.subscribe( list => {
+    //   console.log(list)
+    // });
+
+    np.name = 'Magnit 11111';
+    np.add()
+  }
 
   public userId : String;
   public currentTask: Task = undefined;

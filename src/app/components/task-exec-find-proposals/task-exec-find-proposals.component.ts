@@ -60,12 +60,15 @@ export class TaskExecFindProposalsComponent implements OnInit {
       proposals: [],
       deliveryDays: 45,
       isEditing: true,
+      payMethod: 2,
+      payOrder: 1,
+      prepayPercent: 100,
+      createdAt: new Date(),
     }
 
     this.positions.push(newPosition);
     this._position = newPosition;
  }
-
 
   private editPosition(position){
     this._position = position;
@@ -109,6 +112,11 @@ export class TaskExecFindProposalsComponent implements OnInit {
   }
 
   private saveProposal(proposal){
+
+    console.log(proposal);
+    if (proposal.payOrder == 2){
+      proposal.prepayPercent = undefined;
+    }
 
     this._proposal = undefined;
   }

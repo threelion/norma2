@@ -3,10 +3,14 @@
 		<tr>
 			<td>Product</td>
 			<td>Producer</td>
-			<td>Quantity</td>
+			<td>Q-ty</td>
+			<td>Price,<br>UAH</td>
+			<td>Curr</td>
 			<td>Price</td>
-			<td>Delivery Days</td>
+			<td>Del-ry<br>Days</td>
 			<td>Suplier</td>
+			<td>Pay<br>method</td>
+			<td>Pay<br>order</td>
 			<td>Actions</td>
 		</tr>
 	</thead>
@@ -14,7 +18,7 @@
 		<tr>
 			<td colspan="7">
 					<button class="btn btn-small" (click)="addPosition()" *ngIf="showAddPosBtn()">
-						<img src="assets/img/plus48.png" width="24px" alt="Add position"/>
+						<img src="assets/img/plus48.png" width="16px" alt="Add position"/>
 					</button>
 			</td>
 		</tr>
@@ -28,23 +32,27 @@
 				<td>{{position.product.producer.name}}</td>
 				<td>{{position.quantity}}</td>
 				<td>{{position.initialPrice}}</td>
+				<td>UAH</td>
+				<td></td>
 				<td>{{position.deliveryDays}}</td>
+				<td></td>
+				<td></td>
 				<td></td>
 				<td>
 					<button class="btn btn-small" (click)="removePosition(position)" *ngIf="showDelPosBtn()">
-						<img src="assets/img/minus48.png" width="24px" alt="Remove position"/>
+						<img src="assets/img/minus48.png" width="16px" alt="Remove position"/>
 					</button>
 					<button class="btn btn-small" (click)="editPosition(position)" *ngIf="showEditPosBtn()">
-						<img src="assets/img/change48.png" width="24px" alt="Update position"/>
+						<img src="assets/img/change48.png" width="16px" alt="Update position"/>
 					</button>
 					<button class="btn btn-small" (click)="savePosition(position)" *ngIf="showSavePosBtn()">
-						<img src="assets/img/save48.png" width="24px" alt="Save position"/>
+						<img src="assets/img/save48.png" width="16px" alt="Save position"/>
 					</button>
 					<button class="btn btn-small" (click)="abortPosition(position)" *ngIf="showAbortPosBtn()">
-						<img src="assets/img/abort48.png" width="24px" alt="Abort changes"/>
+						<img src="assets/img/abort48.png" width="16px" alt="Abort changes"/>
 					</button>
 					<button class="btn btn-small" (click)="addProposal()" *ngIf="showAddProposalBtn()">
-						<img src="assets/img/plus48.png" width="24px" alt="Add proposal"/>
+						<img src="assets/img/plus48.png" width="16px" alt="Add proposal"/>
 					</button>
 				</td>
 			</tr>
@@ -52,21 +60,46 @@
 				<td>{{ proposal.product.name }}</td>
 				<td>{{ proposal.product.producer.name }}</td>
 				<td>{{ proposal.quantity }}</td>
+				<td>{{ (proposal.price * proposal.currencyRate.rate) }}</td>
+				<td>
+					<select [ngModel]="proposal.currencyRate.currency._id" (ngModelChange)="recalcEquivalent()">
+						<option value="dcd4fe60-2656-11e9-b721-e12eec2d3b06">UAH</option>
+						<option value="e4050d10-2656-11e9-b721-e12eec2d3b06">RUR</option>
+						<option value="efd816f0-2656-11e9-b721-e12eec2d3b06">USD</option>
+						<option value="e961bb50-2656-11e9-b721-e12eec2d3b06">EUR</option>
+					</select>
+				</td>
+				
 				<td>{{ proposal.price }}</td>
 				<td>{{ proposal.deliveryDays }}</td>
 				<td [attr.title]="supplierInfo(proposal.supplier)">{{ proposal.supplier.name }}</td>
 				<td>
+					<select [ngModel]="proposal.payMethod" (ngModelChange)="proposal.payMethod = $event">
+						<option value="1">Cash</option>
+						<option value="2">Official</option>
+					</select>
+				</td>
+				<td>
+					<select [ngModel]="proposal.payOrder" (ngModelChange)="proposal.payOrder = $event"> 
+						<option value="1">Prepay</option>
+						<option value="2">PostPay</option>
+					</select>
+					<span *ngIf="payOrder=='1'">
+						<input type="number" class="percent-input" [ngModel]="proposal.prepayPercent"  (ngModelChange)="proposal.prepayPercent = $event">%
+					</span>
+				</td>
+				<td>
 					<button class="btn btn-small" (click)="removeProposal(proposal)" *ngIf="showDelProposalBtn()">
-						<img src="assets/img/minus48.png" width="24px" alt="Remove proposal"/>
+						<img src="assets/img/minus48.png" width="16px" alt="Remove proposal"/>
 					</button>
 					<button class="btn btn-small" (click)="editProposal(proposal)" *ngIf="showEditProposalBtn()">
-						<img src="assets/img/change48.png" width="24px" alt="Update proposal"/>
+						<img src="assets/img/change48.png" width="16px" alt="Update proposal"/>
 					</button>
 					<button class="btn btn-small" (click)="saveProposal(proposal)" *ngIf="showSaveProposalBtn()">
-						<img src="assets/img/save48.png" width="24px" alt="Save proposal"/>
+						<img src="assets/img/save48.png" width="16px" alt="Save proposal"/>
 					</button>
 					<button class="btn btn-small" (click)="abortProposal(proposal)" *ngIf="showAbortProposalBtn()">
-						<img src="assets/img/abort48.png" width="24px" alt="Abort changes"/>
+						<img src="assets/img/abort48.png" width="16px" alt="Abort changes"/>
 					</button>
 				</td>
 			</tr>

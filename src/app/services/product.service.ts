@@ -3,6 +3,8 @@ import { handleError } from '../libs/httpErrorHandler';
 
 import { ConfigService } from './config.service';
 
+import { Product } from '../models/product';
+
 @Injectable()
 export class ProductService {
 
@@ -14,10 +16,25 @@ export class ProductService {
 			.catch(handleError)
 	}
 
-	public create(product){
+	public add(product){
 		this.configService.post('products/', product)
 			.map(response => response.json())
 			.catch(handleError)
+	}
+
+	public create(name, producer, kved){
+		let newProduct = new Product(name, producer, kved);
+		newProduct.add = () => {
+			self = getThis();
+			console.log('self');
+			console.log(self);
+
+			// this.add(newProduct);
+		}
+		newProduct.update = this.update(newProduct);
+		newProduct.all = this.getAll();
+
+		return newProduct;
 	}
 
 	public update(product){
@@ -27,4 +44,8 @@ export class ProductService {
 	}
 
 
+}
+
+let getThis = () => {
+	return this
 }
